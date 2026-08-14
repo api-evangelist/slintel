@@ -19,8 +19,11 @@ description: 'Slintel is a B2B sales and market intelligence platform that mines
   2021 and its data and API services are now consolidated into the 6sense Revenue AI
   platform. Slintel''s programmatic surface (company identification, firmographics,
   lead scoring, and enrichment) is delivered through the 6sense API Portal rather than
-  a standalone Slintel developer portal; this profile reflects that consolidation and
-  captures the surviving public developer surface.'
+  a standalone Slintel developer portal. As of a 2026-08-14 probe pass, Slintel operates
+  no developer surface of its own: slintel.com redirects every path into 6sense.com, the
+  historical api.slintel.com and app.slintel.com hosts are decommissioned, no /.well-known/
+  document or machine-readable spec is served, and no first-party SDK exists in any public
+  package registry. The successor APIs are catalogued under the 6sense provider.'
 url: https://raw.githubusercontent.com/api-evangelist/slintel/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -28,9 +31,13 @@ x-backed-by:
 - accel
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-status: acquired
+x-acquired-by: 6sense
+x-acquired-date: '2021-10-05'
+x-primary-provider: 6sense
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-14'
 tags:
 - Company
 - Automation
@@ -49,18 +56,44 @@ maintainers:
 common:
 - type: Website
   url: https://www.slintel.com
-- type: DeveloperPortal
-  url: https://api.6sense.com/docs/
-- type: Documentation
-  url: https://support.6sense.com/docs/6sense-api-overview
-- type: APIReference
-  url: https://api.6sense.com/docs/
-- type: Support
-  url: https://support.6sense.com
+- type: Lifecycle
+  url: lifecycle/slintel-lifecycle.yml
+- type: LLMsTxt
+  url: llms/slintel-llms.txt
 - type: DomainSecurity
   url: security/slintel-domain-security.yml
+x-attribution:
+  note: >-
+    The DeveloperPortal, Documentation, APIReference and Support pointers carried by
+    this record until 2026-08-14 all resolved to 6sense hosts (api.6sense.com,
+    support.6sense.com). They have been removed. 6sense's own API reference does not
+    mention Slintel anywhere, and no Slintel-branded operation exists in it, so those
+    pages document 6sense's API rather than a surviving Slintel developer surface —
+    keeping them would credit Slintel with a developer program it does not operate.
+    The successor surface is recorded in lifecycle/slintel-lifecycle.yml and is
+    catalogued in full under the `6sense` provider.
+  checked: '2026-08-14'
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-14'
   status: minimal
-  artifacts_added: 1
+  artifacts_added: 4
   pass: local-v1
+x-coverage:
+  state: none
+  reason: defunct
+  detail: >-
+    Slintel was absorbed into 6sense (announced 2021-10-05) and its own surface is
+    gone: slintel.com answers a blanket HTTP 301 to 6sense.com/platform/sales on every
+    path including /openapi.json and every /.well-known/ path, while api.slintel.com
+    and app.slintel.com still carry DNS CNAMEs to AWS load balancers that no longer
+    resolve.
+  evidence:
+  - url: https://slintel.com/openapi.json
+    status: 301
+  - url: https://slintel.com/.well-known/agent-card.json
+    status: 301
+  - url: https://api.6sense.com/docs/
+    status: 200
+  - url: https://www.slintel.com/
+    status: 403
+  checked: '2026-08-14'

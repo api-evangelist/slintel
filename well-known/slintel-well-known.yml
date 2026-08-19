@@ -1,0 +1,103 @@
+generated: '2026-08-14'
+method: probed
+source: live HTTP probes of every host named in apis.yml and of the historical Slintel API hosts
+description: >-
+  Probe of the /.well-known/ discovery surface for every Slintel-controlled host.
+  NOTHING was found: not one path returned a 200 carrying a real document, so no
+  WellKnown, SecurityTxt, APICatalog or AgentCard pointer is wired in apis.yml —
+  this file records an absence, and an absence must not be published as a presence.
+  The two Slintel hosts behave in two different ways, and both are findings in
+  their own right. The apex slintel.com answers HTTP 301 to
+  https://6sense.com:443/platform/sales for EVERY path requested, including every
+  /.well-known/ path — a blanket brand redirect into the acquirer, not a document
+  surface. www.slintel.com sits behind a Cloudflare bot challenge that answers
+  HTTP 403 (cf-mitigated: challenge) to every automated request on every path,
+  including the site root, so no conclusion is drawn about what that host would
+  serve to a browser. The historical API hosts api.slintel.com and
+  app.slintel.com still carry CNAMEs to AWS ELB names
+  (slintel-php-applb-external-1006260449.us-east-2.elb.amazonaws.com and
+  slintelprodalb-632670574.us-east-2.elb.amazonaws.com) that themselves no longer
+  resolve — dangling records for load balancers that have been torn down — so
+  they could not be probed at all.
+hosts:
+  - host: https://slintel.com
+    note: >-
+      Apex. Blanket HTTP 301 to https://6sense.com:443/platform/sales on every path
+      (server: awselb/2.0). No path can return a document.
+    documents:
+      - path: /.well-known/security.txt
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /.well-known/openid-configuration
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /.well-known/oauth-authorization-server
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /.well-known/api-catalog
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /.well-known/ai-plugin.json
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /.well-known/agent-card.json
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /.well-known/agent.json
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /llms.txt
+        status: 301
+        location: https://6sense.com:443/platform/sales
+      - path: /openapi.json
+        status: 301
+        location: https://6sense.com:443/platform/sales
+  - host: https://www.slintel.com
+    note: >-
+      Cloudflare bot challenge. Every path — including / — answers HTTP 403 with
+      `cf-mitigated: challenge` and a challenges.cloudflare.com CSP. A browser-like
+      User-Agent does not change the result. Challenges are not evaded, so these
+      403s say nothing about whether a document exists behind them.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+      - path: /llms.txt
+        status: 403
+      - path: /openapi.json
+        status: 403
+      - path: /openapi.yaml
+        status: 403
+      - path: /swagger.json
+        status: 403
+      - path: /api-docs
+        status: 403
+  - host: https://api.slintel.com
+    note: >-
+      Unreachable. DNS returns a CNAME to
+      slintel-php-applb-external-1006260449.us-east-2.elb.amazonaws.com, which does
+      not resolve — a dangling record for a decommissioned load balancer. No TCP
+      connection is possible, so no path was probed.
+    documents: []
+  - host: https://app.slintel.com
+    note: >-
+      Unreachable. CNAME to slintelprodalb-632670574.us-east-2.elb.amazonaws.com,
+      which does not resolve.
+    documents: []
+found: 0
+pointer_emitted: false
+pointer_note: >-
+  No common[].type WellKnown / SecurityTxt / APICatalog / AgentCard pointer is
+  emitted, because zero paths returned a document. A pointer asserts that the
+  provider SERVES that surface; this file is evidence that it does not.

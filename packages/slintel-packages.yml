@@ -1,0 +1,56 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  Unauthenticated registry API sweeps of npm, PyPI, RubyGems, crates.io,
+  Packagist, NuGet, pkg.go.dev and the GitHub REST API (2026-08-14).
+description: >-
+  No first-party Slintel client library exists in any public package registry,
+  and Slintel has no GitHub organization. This is a recorded absence, not an
+  unchecked gap: every registry below answered, and every one of them returned
+  zero results for the term "slintel". The finding is consistent with the rest of
+  this profile — Slintel was acquired by 6sense in October 2021, its apex domain
+  now redirects to 6sense.com, and its API hosts have been decommissioned, so
+  there is no live API left for an SDK to wrap. The successor surface (6sense
+  Company / Enrichment / People APIs and the 6sense MCP server) is profiled under
+  the `6sense` provider in this network; any SDK for it belongs there, not here.
+packages: []
+package_count: 0
+official_count: 0
+registries_checked:
+  - registry: npm
+    endpoint: https://registry.npmjs.org/-/v1/search?text=slintel
+    result: 0 objects
+  - registry: npm
+    endpoint: https://registry.npmjs.org/-/v1/search?text=scope:slintel
+    result: 0 objects — no @slintel scope
+  - registry: pypi
+    endpoint: https://pypi.org/pypi/slintel/json
+    result: 404 Not Found
+  - registry: rubygems
+    endpoint: https://rubygems.org/api/v1/search.json?query=slintel
+    result: empty array
+  - registry: crates.io
+    endpoint: https://crates.io/api/v1/crates?q=slintel
+    result: 0 crates
+  - registry: packagist
+    endpoint: https://packagist.org/search.json?q=slintel
+    result: 0 results
+  - registry: nuget
+    endpoint: https://azuresearch-usnc.nuget.org/query?q=slintel
+    result: 0 totalHits
+  - registry: go
+    endpoint: https://pkg.go.dev/search?q=slintel
+    result: no first-party module
+  - registry: github
+    endpoint: https://api.github.com/orgs/slintel
+    result: 404 Not Found — no Slintel GitHub organization
+github_note: >-
+  A GitHub repository search for "slintel" returns 13 repositories, all of them
+  third-party: former-employee interview exercises, UI experiments, and this
+  network's own api-evangelist/slintel profile repo. None is a Slintel-published
+  client library.
+pointer_emitted: false
+pointer_note: >-
+  No `SDKs` pointer is wired, because zero official client libraries were found.
+  No `Packages` pointer is wired either — this file documents an absence and must
+  not render as a presence.

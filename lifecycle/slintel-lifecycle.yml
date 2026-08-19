@@ -1,0 +1,81 @@
+generated: '2026-08-14'
+method: probed
+source: >-
+  Live DNS + HTTP probes of slintel.com, www.slintel.com, api.slintel.com and
+  app.slintel.com (2026-08-14), read alongside the 6sense acquisition
+  announcement at
+  https://6sense.com/newsroom/6sense-acquires-slintel-to-provide-the-most-comprehensive-b2b-buyer-intelligence-and-ai-powered-insights-available-on-the-market/
+description: >-
+  This is an END-OF-LIFE record, not a versioning policy. Slintel published no
+  deprecation policy, no versioning scheme and no status page that survives, and
+  none can be reconstructed — so nothing here is asserted about how Slintel used
+  to manage change. What IS observable, and what this artifact records, is the
+  terminal state of the Slintel brand's own surface: the company was acquired by
+  6sense in October 2021, the apex domain now answers a blanket HTTP 301 into the
+  acquirer's site on every path, and the two hosts that served the product and
+  its API have been decommissioned at the load balancer while their DNS records
+  were left behind. No StatusPage or Deprecation pointer is wired in apis.yml:
+  6sense operates a status page and a versioning policy, but those are 6sense's
+  and are recorded on the 6sense provider, not borrowed to credit Slintel.
+status: sunset
+lifecycle_stage: retired-into-acquirer
+versioning:
+  scheme: null
+  current: null
+  docs: null
+  note: >-
+    No public Slintel API versioning policy is reachable. The historical
+    developer surface is gone and was not archived by this network, so no claim
+    is made either way about what it contained.
+deprecation:
+  policy_url: null
+  sunset_header: null
+  announcement: null
+  note: >-
+    No formal API deprecation or sunset announcement was found. The Slintel API
+    was retired silently as part of platform consolidation into 6sense; the only
+    evidence of the retirement is infrastructural (see evidence[] below).
+sla: null
+status_page: null
+status_page_note: >-
+  Slintel serves no status page. https://status.6sense.com belongs to the
+  acquirer and is recorded on the `6sense` provider.
+acquisition:
+  acquirer: 6sense
+  acquirer_provider: 6sense
+  announced: '2021-10-05'
+  source: >-
+    https://6sense.com/newsroom/6sense-acquires-slintel-to-provide-the-most-comprehensive-b2b-buyer-intelligence-and-ai-powered-insights-available-on-the-market/
+  successor_surface: >-
+    6sense Company, Enrichment and People APIs at https://api.6sense.com/docs/,
+    plus the remote 6sense MCP server at https://api.6sense.com/mcp. 6sense's own
+    API reference does not mention Slintel anywhere, so the successor APIs are
+    catalogued under the `6sense` provider rather than attributed to this record.
+evidence:
+  - observation: apex brand redirect
+    url: https://slintel.com/
+    status: 301
+    detail: >-
+      301 to https://6sense.com:443/platform/sales, served by awselb/2.0, for
+      every path tested including all /.well-known/ paths and /openapi.json.
+  - observation: marketing host behind a bot challenge
+    url: https://www.slintel.com/
+    status: 403
+    detail: >-
+      Cloudflare interstitial (cf-mitigated: challenge) on every path; a
+      browser-like User-Agent does not change the result.
+  - observation: API host decommissioned
+    url: https://api.slintel.com/
+    status: null
+    detail: >-
+      DNS CNAME to
+      slintel-php-applb-external-1006260449.us-east-2.elb.amazonaws.com, which
+      no longer resolves. Connection impossible — a dangling record for a
+      torn-down AWS load balancer.
+  - observation: app host decommissioned
+    url: https://app.slintel.com/
+    status: null
+    detail: >-
+      DNS CNAME to slintelprodalb-632670574.us-east-2.elb.amazonaws.com, which
+      no longer resolves.
+deprecated_operations: []

@@ -21,6 +21,8 @@ accessModel:
   source: []
   generated: '2026-07-22'
   method: derived
+  source:
+  - {url: 'https://www.slintel.com', status: 301, note: 'declared website redirects to https://6sense.com:443/platform/sales — a different registrable domain (slintel.com -> 6sense.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/slintel.png
 name: Slintel
 description: 'Slintel is a B2B sales and market intelligence platform that mines buyer
